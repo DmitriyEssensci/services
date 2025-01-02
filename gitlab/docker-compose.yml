@@ -59,6 +59,8 @@ services:
       - RELAYHOST_PASSWORD=your_gmail_password  # Пароль от Gmail
       - RELAYHOST_USERNAME=your_email@gmail.com  # Ваш Gmail
       - SMTP_TLS=YES  # Включаем TLS
+    volumes:
+      - ./postfix/mails:/var/mail
     ports:
       - "25:25"  # SMTP-порт
     networks:

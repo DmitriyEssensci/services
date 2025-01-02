@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  sonar-scanner:
+    image: sonarsource/sonar-scanner-cli:latest
+    container_name: sonar-scanner
+    environment:
+      - SONAR_HOST_URL=${SONAR_HOST_URL}
+      - SONAR_LOGIN=${SONAR_LOGIN}
+    volumes:
+      - ${PROJECT_DIR}:/usr/src:rw
+    entrypoint: >
+      bash -c "sonar-scanner \
+        -Dsonar.projectKey=artefact_${ARTEFACT_CIRCLE} \
+        -Dsonar.projectName=artefact \
+        -Dsonar.projectVersion=1.${IMAGE_TAG} \
+        -Dsonar.sources=. \
+        -Dsonar.host.url=${SONAR_HOST_URL} \
+        -Dsonar.login=${SONAR_LOGIN} \
+        -Dsonar.exclusions=logs/**,public.ugc/** "
+    restart: "no"
