@@ -1,0 +1,42 @@
+version: '3.6'
+
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    container_name: gitlab
+    restart: always
+    hostname: 'gitlab-local.ru'  # Замените на ваш домен
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://gitlab.example.com'  # Замените на ваш домен
+        registry_external_url 'https://registry.example.com'  # URL для Docker Registry
+        gitlab_rails['gitlab_jira_cloud_integration'] = true
+        gitlab_rails['gitlab_openproject_integration'] = true
+    ports:
+      - "80:80"
+      - "443:443"
+      - "22:22"
+    volumes:
+      - ./gitlab/config:/etc/gitlab
+      - ./gitlab/logs:/var/log/gitlab
+      - ./gitlab/data:/var/opt/gitlab
+    networks:
+      - gitlab_network
+
+  registry:
+    image: registry:2
+    container_name: registry
+    restart: always
+    environment:
+      REGISTRY_HTTP_ADDR: 0.0.0.0:5000
+      REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /var/lib/registry
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./registry/data:/var/lib/registry
+    networks:
+      - gitlab_network
+
+networks:
+  gitlab_network:
+    driver: bridge
