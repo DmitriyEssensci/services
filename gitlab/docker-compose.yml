@@ -49,7 +49,7 @@ services:
       - gitlab_network
 
   postfix:
-    image: marvambass/postfix:latest
+    image: marvambass/versatile-postfix:latest
     container_name: postfix
     restart: always
     environment:
