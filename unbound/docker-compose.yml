@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  unbound:
+    image: klutchell/unbound:latest
+    container_name: unbound
+    ports:
+      - "53:53/tcp"  # TCP порт для DNS
+      - "53:53/udp"  # UDP порт для DNS
+    volumes:
+      - ./unbound.conf:/etc/unbound/unbound.conf  # Конфигурационный файл
+      - ./custom-records.conf:/etc/unbound/local.d/custom-records.conf  # Пользовательские записи
+    restart: unless-stopped
