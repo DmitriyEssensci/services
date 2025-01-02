@@ -20,6 +20,8 @@ services:
         gitlab_rails['smtp_enable_starttls_auto'] = false
         gitlab_rails['smtp_tls'] = false
         gitlab_rails['gitlab_email_from'] = "gitlab@192.168.206.132"
+        gitlab_rails['gitlab_jira_cloud_integration'] = true
+        gitlab_rails['gitlab_openproject_integration'] = true
     ports:
       - "80:80"
       - "443:443"
@@ -50,8 +52,8 @@ services:
     container_name: mailhog
     restart: always
     ports:
-      - "8025:8025"=
-      - "1025:1025"=
+      - "8025:8025"
+      - "1025:1025"
     networks:
       - gitlab_network
 
