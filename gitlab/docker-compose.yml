@@ -5,13 +5,21 @@ services:
     image: gitlab/gitlab-ce:latest
     container_name: gitlab
     restart: always
-    hostname: 'gitlab-local.ru'  # Замените на ваш домен
+    hostname: 'gitlab.example.com'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://gitlab.example.com'  # Замените на ваш домен
-        registry_external_url 'https://registry.example.com'  # URL для Docker Registry
-        gitlab_rails['gitlab_jira_cloud_integration'] = true
-        gitlab_rails['gitlab_openproject_integration'] = true
+        external_url 'https://gitlab.example.com'
+        registry_external_url 'https://registry.example.com'
+        nginx['ssl_certificate'] = "/etc/gitlab/ssl/registry.example.com.crt"
+        nginx['ssl_certificate_key'] = "/etc/gitlab/ssl/registry.example.com.key"
+        gitlab_rails['smtp_enable'] = true
+        gitlab_rails['smtp_address'] = "mailhog"  # Имя сервиса MailHog
+        gitlab_rails['smtp_port'] = 1025         # Порт MailHog
+        gitlab_rails['smtp_domain'] = "192.168.206.132"
+        gitlab_rails['smtp_authentication'] = "none"
+        gitlab_rails['smtp_enable_starttls_auto'] = false
+        gitlab_rails['smtp_tls'] = false
+        gitlab_rails['gitlab_email_from'] = "gitlab@192.168.206.132"
     ports:
       - "80:80"
       - "443:443"
@@ -19,6 +27,7 @@ services:
       - ./gitlab/config:/etc/gitlab
       - ./gitlab/logs:/var/log/gitlab
       - ./gitlab/data:/var/opt/gitlab
+      - ./gitlab/config/ssl:/etc/gitlab/ssl  # Монтируем директорию с сертификатами
     networks:
       - gitlab_network
 
@@ -33,6 +42,16 @@ services:
       - "5000:5000"
     volumes:
       - ./registry/data:/var/lib/registry
+    networks:
+      - gitlab_network
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: mailhog
+    restart: always
+    ports:
+      - "8025:8025"=
+      - "1025:1025"=
     networks:
       - gitlab_network
 
