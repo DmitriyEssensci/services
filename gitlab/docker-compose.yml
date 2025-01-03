@@ -23,8 +23,8 @@ services:
         gitlab_rails['gitlab_jira_cloud_integration'] = true
         gitlab_rails['gitlab_openproject_integration'] = true
         # Отключаем встроенные PostgreSQL и Redis
-        postgresql['enable'] = false
-        redis['enable'] = false
+        # postgresql['enable'] = false
+        # redis['enable'] = false
         # Настройка внешнего PostgreSQL
         gitlab_rails['db_adapter'] = "postgresql"
         gitlab_rails['db_host'] = "postgresql"  # Имя сервиса PostgreSQL
@@ -61,40 +61,40 @@ services:
     networks:
       - gitlab_network
 
-  postgresql:
-    image: postgres:14
-    container_name: gitlab_postgresql
-    restart: always
-    environment:
-      POSTGRES_USER: gitlab
-      POSTGRES_PASSWORD: gitlab
-      POSTGRES_DB: gitlabhq_production
-    volumes:
-      - ./postgresql/data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    networks:
-      - gitlab_network
+  # postgresql:
+  #   image: postgres:14
+  #   container_name: gitlab_postgresql
+  #   restart: always
+  #   environment:
+  #     POSTGRES_USER: gitlab
+  #     POSTGRES_PASSWORD: gitlab
+  #     POSTGRES_DB: gitlabhq_production
+  #   volumes:
+  #     - ./postgresql/data:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
+  #   networks:
+  #     - gitlab_network
 
-  redis:
-    image: redis:6
-    container_name: gitlab_redis
-    restart: always
-    volumes:
-      - ./redis/data:/data
-    ports:
-      - "6379:6379"
-    networks:
-      - gitlab_network
+  # redis:
+  #   image: redis:6
+  #   container_name: gitlab_redis
+  #   restart: always
+  #   volumes:
+  #     - ./redis/data:/data
+  #   ports:
+  #     - "6379:6379"
+  #   networks:
+  #     - gitlab_network
 
-  redisinsight:
-    image: redislabs/redisinsight:latest
-    container_name: gitlab_redisinsight
-    ports:
-      - "8001:8001"
-    volumes:
-      - ./redisinsight_data:/db
-    restart: always
+  # redisinsight:
+  #   image: redislabs/redisinsight:latest
+  #   container_name: gitlab_redisinsight
+  #   ports:
+  #     - "8001:8001"
+  #   volumes:
+  #     - ./redisinsight_data:/db
+  #   restart: always
 
   # postfix:
   #   image: marvambass/versatile-postfix:latest

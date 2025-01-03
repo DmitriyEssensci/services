@@ -2,6 +2,6 @@
 
 mkdir -p ./gitlab/config/ssl && 
 cd ./gitlab/config/ssl &&
-openssl req -x509 -newkey rsa:4096 -keyout 192.168.206.132.key -out 192.168.206.132.crt -days 365 -nodes -subj "/CN=192.168.206.132" &&
-chmod -R 700 ./gitlab/config/ssl
+openssl req -x509 -newkey rsa:4096 -keyout infr-local.key -out infr-local.crt -days 365 -nodes -subj "/CN=infr-local" &&
+chmod -R 700 ./gitlab/config/ssl &&
 chmod -R 700 ./gitlab/data
