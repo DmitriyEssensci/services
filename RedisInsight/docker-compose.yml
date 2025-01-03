@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+
+  redisinsight:
+    image: redislabs/redisinsight:latest
+    container_name: redisinsight
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./redisinsight_data:/db
+    restart: always
+
+volumes:
+  redisinsight_data:
