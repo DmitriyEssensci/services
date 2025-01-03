@@ -5,11 +5,11 @@ services:
     image: gitlab/gitlab-ce:latest
     container_name: gitlab
     restart: always
-    hostname: '192.168.206.132'
+    hostname: 'infr-local'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://192.168.206.132'
-        registry_external_url 'https://192.168.206.132'
+        external_url 'https://infr-local'
+        registry_external_url 'https://infr-local'
         nginx['ssl_certificate'] = "/etc/gitlab/ssl/registry.example.com.crt"
         nginx['ssl_certificate_key'] = "/etc/gitlab/ssl/registry.example.com.key"
         gitlab_rails['smtp_enable'] = true
@@ -67,7 +67,7 @@ services:
     restart: always
     environment:
       POSTGRES_USER: gitlab
-      POSTGRES_PASSWORD: your_password
+      POSTGRES_PASSWORD: gitlab
       POSTGRES_DB: gitlabhq_production
     volumes:
       - ./postgresql/data:/var/lib/postgresql/data
