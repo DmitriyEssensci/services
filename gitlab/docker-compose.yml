@@ -23,15 +23,15 @@ services:
         gitlab_rails['gitlab_jira_cloud_integration'] = true
         gitlab_rails['gitlab_openproject_integration'] = true
         # Отключаем встроенные PostgreSQL и Redis
-        postgresql['enable'] = false
+        # postgresql['enable'] = false
         # redis['enable'] = false
         # Настройка внешнего PostgreSQL
-        gitlab_rails['db_adapter'] = "postgresql"
-        gitlab_rails['db_host'] = "postgresql"  # Имя сервиса PostgreSQL
-        gitlab_rails['db_port'] = "5432"
-        gitlab_rails['db_username'] = "gitlab"
-        gitlab_rails['db_password'] = "gitlab"
-        gitlab_rails['db_database'] = "gitlabhq_production"
+        # gitlab_rails['db_adapter'] = "postgresql"
+        # gitlab_rails['db_host'] = "postgresql"  # Имя сервиса PostgreSQL
+        # gitlab_rails['db_port'] = "5432"
+        # gitlab_rails['db_username'] = "gitlab"
+        # gitlab_rails['db_password'] = "gitlab"
+        # gitlab_rails['db_database'] = "gitlabhq_production"
         # Настройка внешнего Redis
         # gitlab_rails['redis_host'] = "redis"  # Имя сервиса Redis
         # gitlab_rails['redis_port'] = "6379"
@@ -61,20 +61,20 @@ services:
     networks:
       - gitlab_network
 
-  postgresql:
-    image: postgres:14
-    container_name: gitlab_postgresql
-    restart: always
-    environment:
-      POSTGRES_USER: gitlab
-      POSTGRES_PASSWORD: gitlab
-      POSTGRES_DB: gitlabhq_production
-    volumes:
-      - ./postgresql/data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    networks:
-      - gitlab_network
+  # postgresql:
+  #   image: postgres:14
+  #   container_name: gitlab_postgresql
+  #   restart: always
+  #   environment:
+  #     POSTGRES_USER: gitlab
+  #     POSTGRES_PASSWORD: gitlab
+  #     POSTGRES_DB: gitlabhq_production
+  #   volumes:
+  #     - ./postgresql/data:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
+  #   networks:
+  #     - gitlab_network
 
   # redis:
   #   image: redis:6
