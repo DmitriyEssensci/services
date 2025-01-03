@@ -1,5 +1,13 @@
-postgres/postgres_data/
-postgres/pgadmin_data/
+postgres_pgadmin/postgres_data/
+postgres_pgadmin/pgadmin_data/
 
 gitlab/gitlab
 gitlab/registry
+
+sonarqube/postgresql
+sonarqube/postgresql_data
+sonarqube/sonarqube_bundled-plugins
+sonarqube/sonarqube_conf
+sonarqube/sonarqube_data
+sonarqube/sonarqube_extensions
+sonarqube/sonarqube_logs

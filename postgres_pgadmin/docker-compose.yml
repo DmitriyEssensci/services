@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  my_postgres:
+    image: postgres:latest
+    container_name: my_postgres
+    tty: true
+    restart: always
+    networks:
+      - postgres_network
+    ports:
+      - 5432:5432
+    environment:
+      TZ: "Europe/Moscow"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - ./:/var/lib/postgresql
+      - ./postgres_data:/var/lib/postgresql/data
+
+  my_pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: my_pgadmin
+    tty: true
+    restart: always
+    networks:
+      - postgres_network
+    ports:
+      - 5433:80
+    environment:
+      TZ: "Europe/Moscow"
+      PGADMIN_DEFAULT_EMAIL: "dmitriytarasov122@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "postgres"
+    volumes:
+      - ./pgadmin_data:/var/lib/pgadmin
+
+networks:
+  postgres_network:
+    driver: bridge
