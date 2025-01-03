@@ -49,7 +49,7 @@ services:
 
   registry:
     image: registry:2
-    container_name: registry
+    container_name: gitlab_registry
     restart: always
     environment:
       REGISTRY_HTTP_ADDR: 0.0.0.0:5000
@@ -63,7 +63,7 @@ services:
 
   postgresql:
     image: postgres:14
-    container_name: postgresql
+    container_name: gitlab_postgresql
     restart: always
     environment:
       POSTGRES_USER: gitlab
@@ -76,7 +76,7 @@ services:
 
   redis:
     image: redis:6
-    container_name: redis
+    container_name: gitlab_redis
     restart: always
     volumes:
       - ./redis/data:/data
@@ -85,7 +85,7 @@ services:
 
   postfix:
     image: marvambass/versatile-postfix:latest
-    container_name: postfix
+    container_name: gitlab_postfix
     restart: always
     environment:
       - MAILNAME=192.168.206.132
@@ -103,7 +103,7 @@ services:
 
   mailhog:
     image: mailhog/mailhog:latest
-    container_name: mailhog
+    container_name: gitlab_mailhog
     restart: always
     ports:
       - "8025:8025"  # Веб-интерфейс MailHog
