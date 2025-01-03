@@ -1,0 +1,6 @@
+#/bin/bash
+openssl req -x509 -newkey rsa:4096 \
+  -keyout 192.168.206.132.key \
+  -out 192.168.206.132.crt \
+  -days 365 -nodes \
+  -subj "/CN=192.168.206.132"
